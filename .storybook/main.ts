@@ -1,5 +1,5 @@
 import type { StorybookConfig } from '@storybook/react-vite';
-// import { mergeConfig } from 'vite';
+import { mergeConfig } from 'vite';
 
 const config: StorybookConfig = {
   stories: [
@@ -11,11 +11,11 @@ const config: StorybookConfig = {
     name: '@storybook/react-vite',
     options: {},
   },
-  // viteFinal: async (config) => {
-  //   return mergeConfig(config, {
-  //     base: '/storybook/',
-  //   });
-  // },
+  viteFinal: async (config) => {
+    return mergeConfig(config, {
+      base: '/storybook/',
+    });
+  },
 };
 
 export default config;
