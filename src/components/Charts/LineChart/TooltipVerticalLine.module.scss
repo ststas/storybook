@@ -1,0 +1,21 @@
+.vertical-line {
+  stroke: #0d00aa;
+  stroke-width: 1.5px;
+  pointer-events: none;
+  opacity: 0;
+
+  &_visible {
+    opacity: 1;
+    transition: opacity 100ms ease-in;
+  }
+}
+
+.triangle {
+  fill: #0d00aa;
+  opacity: 0;
+
+  &_visible {
+    opacity: 1;
+    transition: opacity 100ms ease-in;
+  }
+}

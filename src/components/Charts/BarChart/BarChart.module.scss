@@ -1,0 +1,29 @@
+@mixin tick-text() {
+  font-size: 12px;
+  line-height: 109%;
+  font-family: "'Roboto', sans-serif";
+  font-weight: 500;
+  fill: #918f9a;
+  color: #918f9a;
+  word-break: break-all;
+}
+
+.axis {
+  stroke: #dedce5;
+
+  line {
+    stroke: #dedce5;
+  }
+
+  &__tick {
+    @include tick-text();
+
+    line {
+      stroke: #dedce5;
+    }
+
+    tspan {
+      @include tick-text();
+    }
+  }
+}

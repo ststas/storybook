@@ -1,0 +1,136 @@
+@use "sass:meta";
+@use "sass:math";
+@use "sass:list";
+
+@mixin mediaWidth($num1, $num2) {
+  $min: 0;
+  $max: 0;
+
+  @if $num1 > $num2 {
+    $min: $num2;
+    $max: $num1;
+  } @else {
+    $min: $num1;
+    $max: $num2;
+  }
+
+  $min: calc-media-value($min);
+  $max: calc-media-value($max);
+
+  @media screen and (min-width: $min) and (max-width: $max) {
+    @content;
+  }
+}
+
+@mixin mediaMinWidth($min) {
+  $min: calc-media-value($min);
+
+  @media screen and (min-width: $min) {
+    @content;
+  }
+}
+
+@function calc-media-value($value) {
+  @if (
+    meta.type-of($value) ==
+      'number' and
+      list.index('cm' 'mm' 'in' 'px' 'pt' 'pc', math.unit($value)) !=
+      null
+  ) {
+    $value: $value;
+  } @else {
+    $value: $value + px;
+  }
+
+  @return $value;
+}
+
+.wrapper {
+  height: 400px;
+
+  @include mediaMinWidth(1050) {
+    margin-bottom: 20px;
+  }
+
+  @include mediaWidth(900, 1050) {
+    margin-bottom: 15px;
+  }
+
+  @include mediaWidth(750, 900) {
+    margin-bottom: 10px;
+  }
+
+  @include mediaWidth(600, 750) {
+    margin-bottom: 5px;
+  }
+
+  @include mediaWidth(466, 600) {
+    margin-bottom: 0px;
+  }
+}
+
+@mixin tooltip-font() {
+  font-family: "'Roboto', sans-serif";
+  font-size: 12px;
+  font-weight: 400;
+  color: #918f9a;
+  font-style: normal;
+  font-weight: var(--tooltip-font-weight);
+  letter-spacing: 0.25px;
+  line-height: 125%;
+}
+
+.tooltip-container {
+  display: flex;
+  flex-direction: column;
+
+  &__divider {
+    height: 1px;
+    background-color: #dedce5;
+    margin: 8px 0;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    --tooltip-font-weight: #{500};
+    @include tooltip-font();
+    line-height: 153%;
+    color: #1b1b23;
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed #dedce5;
+    margin-top: 6px;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
+
+  &__item-text {
+    --tooltip-font-weight: #{400};
+    @include tooltip-font();
+    line-height: 130%;
+    color: #1b1b23;
+    margin: 0 10px;
+  }
+
+  &__item-data {
+    --tooltip-font-weight: #{500};
+    @include tooltip-font();
+    color: #52515b;
+    margin: 0 0 0 auto;
+  }
+}

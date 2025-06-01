@@ -1,0 +1,58 @@
+@keyframes circle-pop {
+  from {
+    transform: scale(0.2);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.axis {
+  stroke: none;
+
+  &__tick {
+    line {
+      stroke: none;
+    }
+
+    tspan {
+      text-align: right;
+      font-size: 12px;
+      line-height: 12px;
+      font-family: "'Roboto', sans-serif";
+      font-weight: 400;
+      fill: #918f9a;
+      pointer-events: none;
+    }
+  }
+}
+
+.line {
+  fill: none;
+  stroke: #dedce5;
+  stroke-width: 1px;
+}
+
+.label {
+  font-size: 12px;
+  line-height: 125%;
+  font-family: "'Roboto', sans-serif";
+  font-weight: 500;
+  fill: #1b1b23;
+  letter-spacing: 0.25px;
+  cursor: pointer;
+}
+
+.marker {
+  animation-duration: 0.15s;
+  animation-name: circle-pop;
+  transform-box: fill-box;
+  transform-origin: center center;
+  fill-opacity: 0.2;
+}
+
+.polygon {
+  stroke-linejoin: round;
+  fill: none;
+  stroke-width: 1px;
+}

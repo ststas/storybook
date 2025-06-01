@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  storybook-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "6006:6006"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - STORYBOOK_DISABLE_TELEMETRY=1
+    command: npm run storybook -- --host 0.0.0.0
+    network_mode: "host"
+
+  storybook-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    environment:
+      - NODE_ENV=production 
