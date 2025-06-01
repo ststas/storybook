@@ -6,4 +6,5 @@ Dockerfile
 .gitignore
 README.md
 storybook-static
-.DS_Store 
+.DS_Store
+dist
