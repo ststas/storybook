@@ -32,13 +32,24 @@ jobs:
           AWS_LS_IP: ${{ secrets.AWS_LS_IP }}
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Deploy to server
+      - name: Upload project to server
         run: |
           ssh -i aws_rsa.pem -o StrictHostKeyChecking=no ubuntu@$AWS_LS_IP "mkdir -p /home/ubuntu/storybook && chmod 777 /home/ubuntu/storybook"
-
           rsync -avz --progress -e "ssh -i aws_rsa.pem -o StrictHostKeyChecking=no" ./ ubuntu@$AWS_LS_IP:/home/ubuntu/storybook
+        env:
+          AWS_LS_IP: ${{ secrets.AWS_LS_IP }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Build storybook on server
+        run: |
           ssh -i aws_rsa.pem -o StrictHostKeyChecking=no ubuntu@$AWS_LS_IP << 'EOF'
+            # Ensure Node.js and npm are available
+            if ! command -v npm >/dev/null 2>&1; then
+              echo "npm not found. Please install Node.js on the server."
+              exit 1
+            fi
+
+            # Optional swapfile setup (can be removed if not needed)
             if [ ! -f /swapfile ]; then
               sudo fallocate -l 1G /swapfile
               sudo chmod 600 /swapfile
@@ -49,17 +60,13 @@ jobs:
 
             cd /home/ubuntu/storybook
 
-            # Build storybook before Docker Compose
             npm ci
             npm run build-storybook
-            ls -l storybook-static
-            cd ..
 
-            docker system prune -af
+            ls -lah storybook-static
 
-            docker-compose down
-            docker-compose up -d --build
+            echo "✅ Storybook built successfully"
           EOF
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           AWS_LS_IP: ${{ secrets.AWS_LS_IP }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
