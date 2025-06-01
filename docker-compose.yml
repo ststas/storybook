@@ -24,3 +24,5 @@ services:
       - "80:80"
     environment:
       - NODE_ENV=production 
+    mem_limit: 120m
+    memswap_limit: 150m

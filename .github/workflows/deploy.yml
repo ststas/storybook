@@ -49,9 +49,10 @@ jobs:
 
             cd /home/ubuntu/storybook
 
-            # Build frontend before Docker Compose
+            # Build storybook before Docker Compose
             npm ci
-            npm run build
+            npm run build-storybook
+            ls -l storybook-static
             cd ..
 
             docker system prune -af
