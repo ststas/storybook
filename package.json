@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "prepare": "husky",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "build-storybook": "build-storybook --base-path /storybook/",
     "test": "echo \"No tests specified\" && exit 0"
   },
   "dependencies": {
