@@ -60,6 +60,9 @@ jobs:
 
             cd /home/ubuntu/storybook
 
+            echo "🧹 Removing previous storybook-static folder (if exists)"
+            rm -rf storybook-static
+
             npm ci
             npm run build-storybook
 
