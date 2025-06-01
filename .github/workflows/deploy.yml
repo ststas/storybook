@@ -50,7 +50,6 @@ jobs:
             cd /home/ubuntu/storybook
 
             # Build frontend before Docker Compose
-            cd frontend
             npm ci
             npm run build
             cd ..
